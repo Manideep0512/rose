@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Rose Day Abhigna 🌹</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(270deg,#ff9a9e,#fad0c4,#ff9a9e);
+  background-size: 600% 600%;
+  animation: gradientBG 10s ease infinite;
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+  transition: 0.8s;
+}
+
+@keyframes gradientBG {
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+.container {
+  text-align: center;
+  animation: fadeIn 2s ease;
+  z-index: 2;
+}
+
+h1 {
+  color: #b3003b;
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+h2 {
+  color: #80002a;
+  font-weight: normal;
+}
+
+p {
+  font-size: 18px;
+  color: #333;
+  min-height: 90px;
+}
+
+/* ROSE */
+.rose {
+  position: relative;
+  width: 120px;
+  height: 180px;
+  margin: 30px auto;
+  animation: bloom 2s ease forwards;
+  transition: 1s;
+}
+
+@keyframes bloom {
+  0% {transform: scale(0);}
+  100% {transform: scale(1);}
+}
+
+.petal {
+  width: 70px;
+  height: 70px;
+  background: red;
+  border-radius: 50%;
+  position: absolute;
+  opacity: 0;
+  animation: petalAppear 2s forwards;
+}
+
+.petal:nth-child(1){top:0;left:25px;animation-delay:0.2s;}
+.petal:nth-child(2){top:25px;left:0;animation-delay:0.4s;}
+.petal:nth-child(3){top:25px;right:0;animation-delay:0.6s;}
+.petal:nth-child(4){top:50px;left:25px;animation-delay:0.8s;}
+.petal:nth-child(5){top:25px;left:25px;background:darkred;animation-delay:1s;}
+
+@keyframes petalAppear {
+  to {opacity: 1;}
+}
+
+.stem {
+  position: absolute;
+  width: 8px;
+  height: 110px;
+  background: green;
+  top: 70px;
+  left: 56px;
+}
+
+/* BUTTON */
+button {
+  padding: 12px 25px;
+  border: none;
+  background: #b3003b;
+  color: white;
+  font-size: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.1);
+  background: #80002a;
+}
+
+/* FLOATING HEARTS */
+.heart {
+  position: absolute;
+  bottom: -20px;
+  color: red;
+  animation: floatUp 6s linear infinite;
+}
+
+@keyframes floatUp {
+  from {transform: translateY(0); opacity:1;}
+  to {transform: translateY(-100vh); opacity:0;}
+}
+
+/* FALLING PETALS */
+.petal-fall {
+  position: absolute;
+  top: -10px;
+  width: 10px;
+  height: 10px;
+  background: pink;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  to { transform: translateY(100vh) rotate(360deg); }
+}
+
+@keyframes explode {
+  to {
+    transform: translate(var(--x), var(--y));
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOut {
+  from {opacity:1; transform:scale(1);}
+  to {opacity:0; transform:scale(2);}
+}
+
+@keyframes fadeIn {
+  from {opacity:0; transform: translateY(20px);}
+  to {opacity:1; transform: translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>Happy Rose Day My Baby 🌹</h1>
+  <h2>From Your Deepu ❤️</h2>
+
+  <div class="rose" id="rose">
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="stem"></div>
+  </div>
+
+  <p id="msg">A special rose is waiting for you...</p>
+  <button onclick="showMessage()">Open My Heart 💌</button>
+</div>
+
+<script>
+function showMessage() {
+  const msg = document.getElementById("msg");
+
+  /* Background glow */
+  document.body.style.background = "radial-gradient(circle, #ffd1dc, #ff9a9e)";
+
+  /* Rose zoom */
+  document.getElementById("rose").style.transform = "scale(1.4)";
+
+  /* Heart explosion */
+  for (let i = 0; i < 30; i++) {
+    let heart = document.createElement("div");
+    heart.innerHTML = "❤";
+    heart.style.position = "absolute";
+    heart.style.left = "50%";
+    heart.style.top = "50%";
+    heart.style.fontSize = (15 + Math.random()*25) + "px";
+    heart.style.color = "red";
+    heart.style.transform = "translate(-50%, -50%)";
+    heart.style.animation = `explode 1s ease-out forwards`;
+    heart.style.setProperty("--x", (Math.random()*400 - 200) + "px");
+    heart.style.setProperty("--y", (Math.random()*400 - 200) + "px");
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 1000);
+  }
+
+  /* Typewriter message */
+  const text = "You are the most beautiful part of my life.\nThis rose is a symbol of my love for you.\nI Love You SOOO Much 🌹";
+  let i = 0;
+  msg.innerHTML = "";
+  const typing = setInterval(() => {
+    msg.innerHTML += text.charAt(i) === "\n" ? "<br>" : text.charAt(i);
+    i++;
+    if (i >= text.length) clearInterval(typing);
+  }, 35);
+
+  /* Sparkles */
+  for (let i = 0; i < 25; i++) {
+    setTimeout(createSparkle, i * 100);
+  }
+}
+
+/* Floating hearts continuously */
+setInterval(() => {
+  let heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (15 + Math.random()*20) + "px";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}, 500);
+
+/* Falling petals */
+setInterval(() => {
+  let petal = document.createElement("div");
+  petal.className = "petal-fall";
+  petal.style.left = Math.random() * 100 + "vw";
+  petal.style.animationDuration = (3 + Math.random()*5) + "s";
+  document.body.appendChild(petal);
+  setTimeout(() => petal.remove(), 8000);
+}, 300);
+
+/* Sparkles */
+function createSparkle() {
+  let sparkle = document.createElement("div");
+  sparkle.innerHTML = "✨";
+  sparkle.style.position = "absolute";
+  sparkle.style.left = Math.random()*100 + "vw";
+  sparkle.style.top = Math.random()*100 + "vh";
+  sparkle.style.fontSize = "18px";
+  sparkle.style.animation = "fadeOut 2s forwards";
+  document.body.appendChild(sparkle);
+  setTimeout(() => sparkle.remove(), 2000);
+}
+</script>
+
+</body>
+</html>
